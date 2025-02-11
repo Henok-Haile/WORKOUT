@@ -1,0 +1,42 @@
+import express from "express";
+import Workout from "../models/Workout.js";
+import protect from "../middleware/authMiddleware.js";
+
+const router = express.Router();
+
+// Get User's Workouts (Protected Route)
+router.get("/", protect, async (req, res) => {
+    try {
+        const workouts = await Workout.find({ user: req.user.id }); // ✅ Fix: use req.user.id
+        res.json(workouts);
+    } catch (error) {
+        console.error("Error fetching workouts:", error);
+        res.status(500).json({ message: "Server Error" });
+    }
+});
+
+// Add a New Workout (Protected Route)
+router.post("/", protect, async (req, res) => {
+    try {
+        const { exercise, load, reps } = req.body;
+
+        if (!exercise || !load || !reps) {
+            return res.status(400).json({ message: "Please provide all workout details" });
+        }
+
+        const workout = new Workout({
+            user: req.user.id, // Fix: use req.user.id
+            exercise,
+            load,
+            reps,
+        });
+
+        await workout.save();
+        res.json(workout);
+    } catch (error) {
+        console.error("Error adding workout:", error);
+        res.status(500).json({ message: "Server Error" });
+    }
+});
+
+export default router;

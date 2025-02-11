@@ -1,0 +1,30 @@
+/* 🎨 Dashboard Layout */
+.dashboard-container {
+  display: flex;  /* ✅ Aligns workout list & form side by side */
+  justify-content: space-between; /* ✅ Spreads them apart */
+  align-items: flex-start; /* ✅ Aligns form to the top */
+  padding: 20px;
+  width: 80%;
+  margin: 0 auto;
+  gap: 30px; /* ✅ Adds space between workout list & form */
+}
+
+/* Workout List Section (Left) */
+.workout-list {
+  flex: 1; /* ✅ Makes it flexible */
+  background: white;
+  padding: var(--padding);
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  min-width: 65%; /* ✅ Ensures it doesn't shrink too much */
+}
+
+/* Workout Form Section (Right) */
+.workout-form-container {
+  flex: 0.3; /* ✅ Takes 30% of the space */
+  background: var(--secondary-color);
+  padding: var(--padding);
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  min-width: 250px; /* ✅ Prevents excessive shrinking */
+}

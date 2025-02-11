@@ -1,0 +1,39 @@
+/* 🎨 Workout Form Styling */
+.workout-form-container {
+  width: 100%; /* ✅ Makes it responsive */
+  background: white;
+  padding: var(--padding);
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Form */
+.workout-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Input Fields */
+.workout-form input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: var(--border-radius);
+  font-size: 16px;
+}
+
+/* Submit Button */
+.workout-form button {
+  background: var(--primary-color);
+  color: white;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: var(--border-radius);
+  font-size: 16px;
+  transition: background 0.3s ease;
+}
+
+.workout-form button:hover {
+  background: #0056b3;
+}
