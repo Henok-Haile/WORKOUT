@@ -21,7 +21,7 @@ const Dashboard = () => {
       }
 
       try {
-        const response = await fetch("http://localhost:5566/api/workouts", {
+        const response = await fetch("https://workout-qzwy.onrender.com/api/workouts", {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`, // Ensure JWT is sent
