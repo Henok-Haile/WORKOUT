@@ -84,6 +84,35 @@ const Dashboard = () => {
     }
   }, []);
 
+  // Delete workout function
+  const deleteWorkout = async (workoutId) => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      console.error("No token found, user not authenticated");
+      setError("No token found. Please log in.");
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:5566/api/workouts/${workoutId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to delete workout");
+      }
+
+      setWorkouts((prevWorkouts) => prevWorkouts.filter((workout) => workout._id !== workoutId)); // ✅ Remove workout from state
+    } catch (error) {
+      console.error("Error deleting workout:", error.message);
+      setError(error.message);
+    }
+  };
+
   return (
     <div className="dashboard-container">
       <div className="workout-list">
