@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./styles/Auth.css"; // ✅ Import Authentication Styles
+import "./styles/Auth.css"; // Import Authentication Styles
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -11,11 +11,14 @@ const Signup = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:5566/api/users/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+      const response = await fetch(
+        "https://workout-qzwy.onrender.com/api/users/signup",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        }
+      );
 
       const data = await response.json();
 
@@ -25,7 +28,7 @@ const Signup = () => {
         }
 
         localStorage.setItem("token", data.token);
-        localStorage.setItem("userEmail", email); // ✅ Store email in localStorage
+        localStorage.setItem("userEmail", email); // Store email in localStorage
         window.dispatchEvent(new Event("authChanged"));
         navigate("/");
       } else {
@@ -42,7 +45,7 @@ const Signup = () => {
       <h2>Signup</h2>
       <form onSubmit={handleSignup}>
         <div className="form-group">
-          <label htmlFor="email">Email address:</label> {/* ✅ Fixed label */}
+          <label htmlFor="email">Email address:</label> {/* Fixed label */}
           <input
             type="email"
             id="email"
@@ -65,7 +68,9 @@ const Signup = () => {
           />
         </div>
 
-        <button type="submit" className="btn-primary">Signup</button>
+        <button type="submit" className="btn-primary">
+          Signup
+        </button>
       </form>
     </div>
   );

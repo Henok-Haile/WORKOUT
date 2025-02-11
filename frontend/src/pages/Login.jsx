@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./styles/Auth.css"; // ✅ Import Authentication Styles
+import "./styles/Auth.css"; // Import Authentication Styles
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -11,17 +11,20 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:5566/api/users/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+      const response = await fetch(
+        "https://workout-qzwy.onrender.com/api/users/login",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        }
+      );
 
       const data = await response.json();
 
       if (response.ok) {
         localStorage.setItem("token", data.token);
-        localStorage.setItem("userEmail", email); // ✅ Store email in localStorage
+        localStorage.setItem("userEmail", email); // Store email in localStorage
         window.dispatchEvent(new Event("authChanged"));
         navigate("/");
       } else {
@@ -38,7 +41,7 @@ const Login = () => {
       <h2>Login</h2>
       <form onSubmit={handleLogin}>
         <div className="form-group">
-          <label htmlFor="email">Email address:</label> {/* ✅ Fixed label */}
+          <label htmlFor="email">Email address:</label> {/* Fixed label */}
           <input
             type="email"
             id="email"
@@ -61,7 +64,9 @@ const Login = () => {
           />
         </div>
 
-        <button type="submit" className="btn-primary">Login</button>
+        <button type="submit" className="btn-primary">
+          Login
+        </button>
       </form>
     </div>
   );

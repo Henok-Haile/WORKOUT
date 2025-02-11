@@ -1,14 +1,14 @@
 import { useState, useEffect, useCallback } from "react";
 import WorkoutForm from "../components/WorkoutForm.jsx";
 import WorkoutList from "../components/WorkoutList.jsx";
-import "./styles/Dashboard.css";  // ✅ Import CSS
+import "./styles/Dashboard.css"; // Import CSS
 
 const Dashboard = () => {
   const [workouts, setWorkouts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  // ✅ Fetch workouts when component mounts
+  // Fetch workouts when component mounts
   useEffect(() => {
     const fetchWorkouts = async () => {
       const token = localStorage.getItem("token");
@@ -16,7 +16,7 @@ const Dashboard = () => {
       if (!token) {
         console.error("No token found, user not authenticated");
         setError("No token found. Please log in.");
-        setLoading(false); // ✅ Prevents infinite loading state
+        setLoading(false); // Prevents infinite loading state
         return;
       }
 
@@ -34,7 +34,7 @@ const Dashboard = () => {
         }
 
         const data = await response.json();
-        setWorkouts(Array.isArray(data) ? data.reverse() : []); // ✅ Latest workout first
+        setWorkouts(Array.isArray(data) ? data.reverse() : []); //Latest workout first
       } catch (error) {
         console.error("Error fetching workouts:", error.message);
         setError(error.message);
@@ -46,7 +46,7 @@ const Dashboard = () => {
     fetchWorkouts();
   }, []);
 
-  // ✅ Add new workout function (Wrapped in `useCallback` to optimize re-renders)
+  // Add new workout function (Wrapped in `useCallback` to optimize re-renders)
   const addWorkout = useCallback(async (newWorkout) => {
     const token = localStorage.getItem("token");
 
@@ -57,14 +57,17 @@ const Dashboard = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:5566/api/workouts", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(newWorkout),
-      });
+      const response = await fetch(
+        "https://workout-qzwy.onrender.com/api/workouts",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(newWorkout),
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -72,9 +75,9 @@ const Dashboard = () => {
       }
 
       const addedWorkout = await response.json();
-      console.log("✅ Workout added:", addedWorkout); // Debugging
+      console.log("Workout added:", addedWorkout); // Debugging
 
-      setWorkouts((prevWorkouts) => [addedWorkout, ...prevWorkouts]); // ✅ Properly updates state
+      setWorkouts((prevWorkouts) => [addedWorkout, ...prevWorkouts]); // Properly updates state
     } catch (error) {
       console.error("Error adding workout:", error.message);
       setError(error.message);
@@ -89,7 +92,7 @@ const Dashboard = () => {
         {error && <p style={{ color: "red" }}>{error}</p>}
         <WorkoutList workouts={workouts} />
       </div>
-      <WorkoutForm addWorkout={addWorkout} /> {/* ✅ Pass the function properly */}
+      <WorkoutForm addWorkout={addWorkout} /> {/* Pass the function properly */}
     </div>
   );
 };
