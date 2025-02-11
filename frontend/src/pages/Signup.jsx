@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./styles/Auth.css"; // Import Authentication Styles
+import { useSnackbar } from "notistack";
+import "./styles/Auth.css";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
+
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -30,13 +33,18 @@ const Signup = () => {
         localStorage.setItem("token", data.token);
         localStorage.setItem("userEmail", email); // Store email in localStorage
         window.dispatchEvent(new Event("authChanged"));
-        navigate("/");
+
+        enqueueSnackbar("Signup successful! Please log in.", { variant: "success" });
+        
+        navigate("/login");
       } else {
-        console.error("🚨 Signup Error:", data.message);
-        alert(data.message);
+        // console.error("🚨 Signup Error:", data.message);
+        // alert(data.message);
+        enqueueSnackbar(data.message || "Signup failed", { variant: "error" });
       }
     } catch (error) {
-      console.error("Signup Error:", error);
+      // console.error("Signup Error:", error);
+      enqueueSnackbar("Signup error: " + error.message, { variant: "error" });
     }
   };
 

@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useSnackbar } from "notistack";
 import "./styles/Navbar.css"; // ✅ Import Navbar Styles
 
 const Navbar = () => {
@@ -7,7 +8,9 @@ const Navbar = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem("token"));
   const [userEmail, setUserEmail] = useState(localStorage.getItem("userEmail") || ""); // ✅ Added useState
 
-  // ✅ Listen for login/logout updates
+  const { enqueueSnackbar } = useSnackbar();
+  
+  // Listen for login/logout updates
   useEffect(() => {
     const updateAuth = () => {
       setIsAuthenticated(!!localStorage.getItem("token"));
@@ -28,6 +31,9 @@ const Navbar = () => {
     setIsAuthenticated(false);
     setUserEmail(""); // ✅ Reset email on logout
     window.dispatchEvent(new Event("authChanged")); // ✅ Notify Navbar
+
+    enqueueSnackbar("Logged out successfully!", { variant: "info" });
+    
     navigate("/login");
   };
 

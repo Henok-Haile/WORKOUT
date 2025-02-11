@@ -1,8 +1,10 @@
-import "./styles/WorkoutList.css";  // Import CSS
+import "./styles/WorkoutList.css";
+import { formatDistanceToNow } from "date-fns";
+import { FaTrash } from "react-icons/fa"; // Import Trash Icon
 
 const formatDate = (dateString) => {
   const date = new Date(dateString);
-  return date.toLocaleString(); // Formats date to readable time
+  return date.toLocaleString();
 };
 
 const WorkoutList = ({ workouts, deleteWorkout }) => {
@@ -13,25 +15,37 @@ const WorkoutList = ({ workouts, deleteWorkout }) => {
   return (
     <div className="workout-container">
       {workouts.map((workout) => (
-        <div key={workout._id} className="workout-card"> {/* Use workout._id as key */}
-          <h3 className="workout-title">{workout.exercise}</h3>
-          <p className="workout-info"><strong>Load:</strong> {workout.load} kg</p>
-          <p className="workout-info"><strong>Reps:</strong> {workout.reps}</p>
-          <p className="workout-time">Created at: {formatDate(workout.createdAt)}</p>
-          
-          {/* Delete Button */}
-          <button className="delete-btn"
-          onClick={() => {
-            console.log("Delete button clicked for ID:", workout._id); // Debugging
-            if (workout._id) {
-              deleteWorkout(workout._id);
-            } else {
-              console.error("Workout ID is undefined!");
-            }
-          }}
+        <div key={workout._id} className="workout-card">
+          {/* Delete Icon Positioned Absolutely */}
+          <button
+            className="delete-btn"
+            onClick={() => {
+              console.log("Delete button clicked for ID:", workout._id);
+              if (workout._id) {
+                deleteWorkout(workout._id);
+              } else {
+                console.error("Workout ID is undefined!");
+              }
+            }}
           >
-            Delete
+            <FaTrash />
           </button>
+
+          <div className="workout-details">
+            <h3 className="workout-title">{workout.exercise}</h3>
+            <p className="workout-info">
+              <strong>Load:</strong> {workout.load} kg
+            </p>
+            <p className="workout-info">
+              <strong>Reps:</strong> {workout.reps}
+            </p>
+            <p className="workout-time">
+              {/* <strong>Created:</strong>{" "} */}
+              {formatDistanceToNow(new Date(workout.createdAt), {
+                addSuffix: true,
+              })}
+            </p>
+          </div>
         </div>
       ))}
     </div>

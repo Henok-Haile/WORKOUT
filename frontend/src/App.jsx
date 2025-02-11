@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { SnackbarProvider } from "notistack"; 
 import Navbar from "./components/Navbar.jsx";
 import Login from "./pages/Login.jsx";
 import Signup from "./pages/Signup.jsx";
@@ -12,7 +13,8 @@ import "./styles/variables.css";  //  Import CSS variables
 
 function App() {
   return (
-    <BrowserRouter>
+    <SnackbarProvider maxSnack={3} autoHideDuration={3000}>
+      <BrowserRouter>
       <Navbar />
       <Routes>
         <Route path="/login" element={<Login />} />
@@ -22,6 +24,7 @@ function App() {
         </Route>
       </Routes>
     </BrowserRouter>
+    </SnackbarProvider>
   );
 }
 

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./styles/WorkoutForm.css";  // ✅ Import CSS
+import "./styles/WorkoutForm.css";
 
 const WorkoutForm = ({ addWorkout }) => {
   const [exercise, setExercise] = useState("");

@@ -1,6 +1,6 @@
-/* 🎨 Workout List Styling */
+/* Workout List Styling */
 .workout-container {
-  width: 100%; /* ✅ Ensures it takes full space inside .workout-list */
+  width: 100%; /* Ensures it takes full space inside .workout-list */
   margin: 0 auto;
   padding: 20px;
   background: white;
@@ -10,12 +10,14 @@
 
 /* Workout Card */
 .workout-card {
+  position: relative;  /* ✅ Enables absolute positioning inside */
   background: var(--secondary-color);
   padding: 15px;
   margin-bottom: 10px;
   border-radius: var(--border-radius);
   border-left: 5px solid var(--primary-color);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;  /* ✅ Ensures delete button stays inside */
 }
 
 /* Workout Title */
@@ -46,17 +48,19 @@
   color: #888;
 }
 
+/* Delete Button Styling */
 .delete-btn {
-  background: red;
-  color: white;
+  position: absolute;  /* Move to top-right */
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  color: red;
   border: none;
-  padding: 8px 12px;
-  margin-top: 8px;
+  font-size: 18px;  /* Adjust icon size */
   cursor: pointer;
-  border-radius: 5px;
-  transition: background 0.3s ease;
+  transition: color 0.3s ease;
 }
 
 .delete-btn:hover {
-  background: darkred;
+  color: darkred;
 }
