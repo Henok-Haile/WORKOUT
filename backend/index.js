@@ -11,7 +11,7 @@ connectDB();
 const app = express();
 app.use(express.json());
 // app.use(cors());
-app.use(cors({ origin: "*" })); // ✅ Allow frontend to call backend
+app.use(cors()); // ✅ Allow frontend to call backend
 
 app.use("/api/users", userRoutes);
 app.use("/api/workouts", workoutRoutes);

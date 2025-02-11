@@ -39,4 +39,26 @@ router.post("/", protect, async (req, res) => {
     }
 });
 
+// Delete a workout by ID
+router.delete("/:id", protect, async (req, res) => {
+    try {
+      const workout = await Workout.findById(req.params.id);
+  
+      if (!workout) {
+        return res.status(404).json({ message: "Workout not found" });
+      }
+  
+      // Ensure the user owns the workout
+      if (workout.user.toString() !== req.user.id) {
+        return res.status(401).json({ message: "Unauthorized to delete this workout" });
+      }
+  
+      await workout.deleteOne();
+      res.json({ message: "Workout deleted successfully" });
+    } catch (error) {
+      console.error("Error deleting workout:", error);
+      res.status(500).json({ message: "Server error" });
+    }
+  });
+
 export default router;
