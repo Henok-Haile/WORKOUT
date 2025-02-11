@@ -13,14 +13,23 @@ const WorkoutList = ({ workouts, deleteWorkout }) => {
   return (
     <div className="workout-container">
       {workouts.map((workout) => (
-        <div key={workout._id} className="workout-card"> {/* ✅ Use workout._id as key */}
+        <div key={workout._id} className="workout-card"> {/* Use workout._id as key */}
           <h3 className="workout-title">{workout.exercise}</h3>
           <p className="workout-info"><strong>Load:</strong> {workout.load} kg</p>
           <p className="workout-info"><strong>Reps:</strong> {workout.reps}</p>
           <p className="workout-time">Created at: {formatDate(workout.createdAt)}</p>
           
-          {/* ✅ Delete Button */}
-          <button className="delete-btn" onClick={() => deleteWorkout(workout._id)}>
+          {/* Delete Button */}
+          <button className="delete-btn"
+          onClick={() => {
+            console.log("Delete button clicked for ID:", workout._id); // Debugging
+            if (workout._id) {
+              deleteWorkout(workout._id);
+            } else {
+              console.error("Workout ID is undefined!");
+            }
+          }}
+          >
             Delete
           </button>
         </div>

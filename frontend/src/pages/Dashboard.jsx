@@ -95,6 +95,9 @@ const Dashboard = () => {
     }
 
     try {
+
+      console.log("Attempting to delete workout with ID:", workoutId)
+      
       const response = await fetch(`http://localhost:5566/api/workouts/${workoutId}`, {
         method: "DELETE",
         headers: {
