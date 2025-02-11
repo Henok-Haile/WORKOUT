@@ -42,6 +42,9 @@ router.post("/", protect, async (req, res) => {
 // Delete a workout by ID
 router.delete("/:id", protect, async (req, res) => {
     try {
+
+        console.log("Received DELETE request for ID:", req.params.id); // Debugging
+        
       const workout = await Workout.findById(req.params.id);
   
       if (!workout) {
